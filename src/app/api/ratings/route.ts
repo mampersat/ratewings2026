@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 
-export async function POST(req: Request) {
-  const body = await req.json();
-  const { spotId, userId, overall, sauce, crispy, value, notes } = body;
+const COOKIE = "rw_uid";
 
-  if (!spotId || !userId) {
-    return NextResponse.json(
-      { error: "spotId and userId are required" },
-      { status: 400 }
-    );
+export async function POST(req: Request) {
+  const cookieStore = await cookies();
+  const userId = cookieStore.get(COOKIE)?.value;
+
+  if (!userId) {
+    return NextResponse.json({ error: "No user cookie found" }, { status: 401 });
+  }
+
+  const body = await req.json();
+  const { spotId, overall, sauce, crispy, value, notes } = body;
+
+  if (!spotId) {
+    return NextResponse.json({ error: "spotId is required" }, { status: 400 });
   }
 
   const scores = [overall, sauce, crispy, value];
@@ -19,6 +26,13 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+
+  // Create user lazily on first rating
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: { id: userId, name: "Anonymous", email: `${userId}@anon.ratewings` },
+  });
 
   const rating = await prisma.rating.upsert({
     where: { spotId_userId: { spotId, userId } },

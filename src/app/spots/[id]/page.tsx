@@ -34,13 +34,10 @@ export default async function SpotPage({
         ).toFixed(1)
       : "—";
 
-  // TODO: replace with real user ID once auth is added
-  const PLACEHOLDER_USER_ID = "placeholder";
-
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-1">{spot.name}</h1>
-      <p className="text-gray-500 mb-6">
+      <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-1">{spot.name}</h1>
+      <p className="text-gray-500 dark:text-gray-400 mb-6">
         {spot.address}, {spot.city}, {spot.state}
       </p>
 
@@ -54,7 +51,7 @@ export default async function SpotPage({
         ].map(({ label, val }) => (
           <div key={label} className="bg-white rounded-xl p-4 text-center border">
             <p className="text-3xl font-bold text-orange-500">{val}</p>
-            <p className="text-sm text-gray-500">{label}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
           </div>
         ))}
       </div>
@@ -62,7 +59,7 @@ export default async function SpotPage({
       {/* Rating form */}
       <div className="bg-white border rounded-xl p-6 mb-8">
         <h2 className="text-lg font-semibold mb-4">Leave a Rating</h2>
-        <RatingForm spotId={spot.id} userId={PLACEHOLDER_USER_ID} />
+        <RatingForm spotId={spot.id} />
       </div>
 
       {/* Reviews list */}
@@ -73,17 +70,17 @@ export default async function SpotPage({
         {spot.ratings.map((r) => (
           <div key={r.id} className="bg-white border rounded-xl p-4">
             <div className="flex justify-between items-start mb-2">
-              <span className="font-medium text-gray-800">{r.user.name}</span>
+              <span className="font-medium text-gray-800 dark:text-gray-100">{r.user.name}</span>
               <span className="text-orange-500 font-bold">
                 {r.overall}/10
               </span>
             </div>
-            <div className="text-sm text-gray-500 flex gap-4 mb-2">
+            <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-4 mb-2">
               <span>Sauce: {r.sauce}</span>
               <span>Crispy: {r.crispy}</span>
               <span>Value: {r.value}</span>
             </div>
-            {r.notes && <p className="text-sm text-gray-700">{r.notes}</p>}
+            {r.notes && <p className="text-sm text-gray-700 dark:text-gray-200">{r.notes}</p>}
           </div>
         ))}
       </div>

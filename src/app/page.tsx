@@ -3,8 +3,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="text-center py-16">
-      <h1 className="text-5xl font-bold text-gray-900 mb-4">🍗 RateWings</h1>
-      <p className="text-xl text-gray-600 mb-8">
+      <h1 className="text-5xl font-bold text-gray-700 dark:text-gray-200 mb-4">🍗 RateWings</h1>
+      <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
         Discover, review, and rank the best chicken wing spots.
       </p>
       <div className="flex gap-4 justify-center flex-wrap">

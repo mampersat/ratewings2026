@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   spotId: string;
-  userId: string; // will come from session once auth is added
 };
 
 const FIELDS = [
@@ -24,7 +23,7 @@ const defaultScores = (): Record<RatingKey, number> => ({
   value: 7,
 });
 
-export default function RatingForm({ spotId, userId }: Props) {
+export default function RatingForm({ spotId }: Props) {
   const router = useRouter();
   const [scores, setScores] = useState(defaultScores());
   const [notes, setNotes] = useState("");
@@ -39,7 +38,7 @@ export default function RatingForm({ spotId, userId }: Props) {
     const res = await fetch("/api/ratings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ spotId, userId, ...scores, notes }),
+      body: JSON.stringify({ spotId, ...scores, notes }),
     });
 
     if (!res.ok) {
@@ -59,7 +58,7 @@ export default function RatingForm({ spotId, userId }: Props) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {FIELDS.map(({ key, label }) => (
         <div key={key}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
             {label}: <span className="text-orange-500 font-bold">{scores[key]}</span>
           </label>
           <input
@@ -75,7 +74,7 @@ export default function RatingForm({ spotId, userId }: Props) {
         </div>
       ))}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
           Notes (optional)
         </label>
         <textarea

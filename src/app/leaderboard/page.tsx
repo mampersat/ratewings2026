@@ -54,10 +54,10 @@ export default async function LeaderboardPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Leaderboard</h1>
+      <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-6">Leaderboard</h1>
 
       {spots.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">
+        <p className="text-gray-500 dark:text-gray-400 text-center py-12">
           No rated spots yet.{" "}
           <Link href="/spots" className="text-orange-500 underline">
             Browse spots
@@ -73,10 +73,10 @@ export default async function LeaderboardPage() {
                   {i + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900 truncate">
+                  <p className="font-semibold text-gray-700 dark:text-gray-200 truncate">
                     {spot.name}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     {spot.city}, {spot.state} · {spot.totalRatings} ratings
                   </p>
                 </div>

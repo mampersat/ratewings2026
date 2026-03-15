@@ -14,6 +14,12 @@ export default function Nav() {
           <Link href="/leaderboard" className="hover:underline">
             Leaderboard
           </Link>
+          <Link
+            href="/spots/new"
+            className="bg-white text-orange-500 px-3 py-1 rounded-lg font-semibold hover:bg-orange-50"
+          >
+            + Add Spot
+          </Link>
         </div>
       </div>
     </nav>

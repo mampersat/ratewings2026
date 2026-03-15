@@ -20,7 +20,7 @@ export default function SpotCard({ spot }: Props) {
         )}
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h2 className="font-semibold text-gray-900">{spot.name}</h2>
+            <h2 className="font-semibold text-gray-800">{spot.name}</h2>
             <p className="text-sm text-gray-500">
               {spot.city}, {spot.state}
             </p>

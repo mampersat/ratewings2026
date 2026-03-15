@@ -28,11 +28,11 @@ export default async function SpotsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Wing Spots</h1>
+        <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">Wing Spots</h1>
       </div>
 
       {spots.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">
+        <p className="text-gray-500 dark:text-gray-400 text-center py-12">
           No spots yet. Be the first to add one!
         </p>
       ) : (
