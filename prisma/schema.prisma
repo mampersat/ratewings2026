@@ -1,0 +1,48 @@
+// Learn more about Prisma schema: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  ratings Rating[]
+}
+
+model Spot {
+  id        String   @id @default(cuid())
+  name      String
+  address   String
+  city      String
+  state     String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+
+  ratings Rating[]
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  spotId    String
+  userId    String
+  overall   Int      // 1–10
+  sauce     Int      // 1–10
+  crispy    Int      // 1–10
+  value     Int      // 1–10
+  notes     String?
+  createdAt DateTime @default(now())
+
+  spot Spot @relation(fields: [spotId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([spotId, userId]) // one rating per user per spot
+}
