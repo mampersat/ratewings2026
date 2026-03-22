@@ -10,7 +10,7 @@ export default function SpotCard({ spot }: Props) {
 
   return (
     <Link href={`/spots/${spot.id}`}>
-      <div className="border rounded-xl p-4 hover:shadow-md transition-shadow bg-white">
+      <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 hover:shadow-md transition-shadow">
         {spot.imageUrl && (
           <img
             src={spot.imageUrl}
@@ -20,8 +20,8 @@ export default function SpotCard({ spot }: Props) {
         )}
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h2 className="font-semibold text-gray-800">{spot.name}</h2>
-            <p className="text-sm text-gray-500">
+            <h2 className="font-semibold text-gray-100">{spot.name}</h2>
+            <p className="text-sm text-gray-400">
               {spot.city}, {spot.state}
             </p>
           </div>
