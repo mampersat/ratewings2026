@@ -99,7 +99,7 @@ if row:
 else:
     pg_cur.execute(
         'INSERT INTO "User" (id, name, email, "createdAt") VALUES (%s, %s, %s, %s)',
-        (SEED_USER_ID, "Imported Data", SEED_USER_EMAIL, datetime.now(timezone.utc)),
+        (SEED_USER_ID, "Unknown User", SEED_USER_EMAIL, datetime.now(timezone.utc)),
     )
     print(f"Created seed user: {SEED_USER_ID}")
 
@@ -140,6 +140,11 @@ for loc in locations:
 print(f"Spots: {spots_inserted} inserted, {spots_skipped} skipped (already exist)")
 
 # ---- Import Ratings ----
+# Wipe all existing seed-user ratings and re-insert fresh from wings.db
+pg_cur.execute('DELETE FROM "Rating" WHERE "userId" = %s', (SEED_USER_ID,))
+deleted = pg_cur.rowcount
+print(f"Cleared {deleted} existing imported ratings")
+
 reviews = sqlite_conn.execute("SELECT * FROM wing_reviews").fetchall()
 
 ratings_inserted = 0
@@ -148,15 +153,6 @@ ratings_skipped = 0
 for rev in reviews:
     spot_id = old_id_to_new.get(rev["location_id"])
     if not spot_id:
-        ratings_skipped += 1
-        continue
-
-    # Check for duplicate (unique constraint: spotId+userId)
-    pg_cur.execute(
-        'SELECT id FROM "Rating" WHERE "spotId" = %s AND "userId" = %s',
-        (spot_id, SEED_USER_ID),
-    )
-    if pg_cur.fetchone():
         ratings_skipped += 1
         continue
 

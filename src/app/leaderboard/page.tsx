@@ -77,14 +77,14 @@ export default async function LeaderboardPage() {
                     {spot.name}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {spot.city}, {spot.state} · {spot.totalRatings} ratings
+                    {[spot.city, spot.state].filter(Boolean).join(", ")} · {spot.totalRatings} ratings
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-orange-500">
                     {spot.avgOverall.toFixed(1)}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">overall</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">🌶 {spot.avgSauce.toFixed(1)} heat</p>
                 </div>
               </div>
             </Link>

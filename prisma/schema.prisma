@@ -45,6 +45,4 @@ model Rating {
 
   spot Spot @relation(fields: [spotId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([spotId, userId]) // one rating per user per spot
 }

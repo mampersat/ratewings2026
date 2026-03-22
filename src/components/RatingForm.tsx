@@ -9,7 +9,7 @@ type Props = {
 
 const FIELDS = [
   { key: "overall", label: "Overall" },
-  { key: "sauce", label: "Sauce" },
+  { key: "sauce", label: "Heat" },
   { key: "crispy", label: "Crispiness" },
   { key: "value", label: "Value" },
 ] as const;

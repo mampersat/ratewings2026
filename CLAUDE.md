@@ -43,12 +43,25 @@ RateWings is a Next.js + TypeScript app for discovering, reviewing, and ranking 
 
 ## Environment variables
 Copy `.env.example` to `.env.local` and fill in:
-- `DATABASE_URL` — Postgres connection string
+- `DATABASE_URL` — Postgres connection string (local: `postgresql://ratewings:ratewings@localhost:5432/ratewings`)
+- `ADMIN_PASSWORD` — Password for `/admin` (defaults to `"admin"` if unset)
+- `PROD_DB_URL` — Production Railway DB URL (used by sync script only)
+
+## Deployment
+- **Platform**: Railway
+- **Database**: PostgreSQL hosted on Railway
+- To get the production `DATABASE_URL`, run: `railway variables` (requires Railway CLI + login)
+- To run migrations against production: `DATABASE_URL=<prod-url> npx prisma migrate deploy`
+- To import seed data against production: `DATABASE_URL=<prod-url> python3 scripts/import-wings-db.py`
+- To sync local DB → prod (destructive): `./scripts/sync-db-to-prod.sh` (reads `PROD_DB_URL` from `.env.local`)
 
 ## Dev workflow
 ```bash
 # Install dependencies
 npm install
+
+# Start local Postgres (Docker)
+docker run -d --name ratewings-db -e POSTGRES_USER=ratewings -e POSTGRES_PASSWORD=ratewings -e POSTGRES_DB=ratewings -p 5432:5432 postgres:16
 
 # Run Prisma migrations
 npx prisma migrate dev
