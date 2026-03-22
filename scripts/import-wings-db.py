@@ -115,17 +115,25 @@ for loc in locations:
     new_spot_id = new_id()
     old_id_to_new[loc["id"]] = new_spot_id
 
+    lat = loc["lat"] if loc["lat"] else None
+    lng = loc["lon"] if loc["lon"] else None
+
     # Check for duplicate by name+address
     pg_cur.execute('SELECT id FROM "Spot" WHERE name = %s AND address = %s', (loc["name"], address))
     existing = pg_cur.fetchone()
     if existing:
         old_id_to_new[loc["id"]] = existing[0]
+        # Backfill coordinates if missing
+        pg_cur.execute(
+            'UPDATE "Spot" SET lat = %s, lng = %s WHERE id = %s AND lat IS NULL',
+            (lat, lng, existing[0]),
+        )
         spots_skipped += 1
         continue
 
     pg_cur.execute(
-        'INSERT INTO "Spot" (id, name, address, city, state, "createdAt") VALUES (%s, %s, %s, %s, %s, %s)',
-        (new_spot_id, loc["name"], address, city, state, datetime.now(timezone.utc)),
+        'INSERT INTO "Spot" (id, name, address, city, state, lat, lng, "createdAt") VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+        (new_spot_id, loc["name"], address, city, state, lat, lng, datetime.now(timezone.utc)),
     )
     spots_inserted += 1
 

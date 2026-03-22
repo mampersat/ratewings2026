@@ -49,7 +49,7 @@ export default async function SpotPage({
           { label: "Crispiness", val: avg("crispy") },
           { label: "Value", val: avg("value") },
         ].map(({ label, val }) => (
-          <div key={label} className="bg-white rounded-xl p-4 text-center border">
+          <div key={label} className="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center">
             <p className="text-3xl font-bold text-orange-500">{val}</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
           </div>
@@ -57,8 +57,8 @@ export default async function SpotPage({
       </div>
 
       {/* Rating form */}
-      <div className="bg-white border rounded-xl p-6 mb-8">
-        <h2 className="text-lg font-semibold mb-4">Leave a Rating</h2>
+      <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-8">
+        <h2 className="text-lg font-semibold text-gray-100 mb-4">Leave a Rating</h2>
         <RatingForm spotId={spot.id} />
       </div>
 
@@ -68,7 +68,7 @@ export default async function SpotPage({
       </h2>
       <div className="space-y-4">
         {spot.ratings.map((r) => (
-          <div key={r.id} className="bg-white border rounded-xl p-4">
+          <div key={r.id} className="bg-gray-800 border border-gray-700 rounded-xl p-4">
             <div className="flex justify-between items-start mb-2">
               <span className="font-medium text-gray-800 dark:text-gray-100">{r.user.name}</span>
               <span className="text-orange-500 font-bold">

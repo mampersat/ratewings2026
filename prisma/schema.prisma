@@ -25,6 +25,8 @@ model Spot {
   city      String
   state     String
   imageUrl  String?
+  lat       Float?
+  lng       Float?
   createdAt DateTime @default(now())
 
   ratings Rating[]
