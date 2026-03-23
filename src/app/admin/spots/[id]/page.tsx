@@ -91,9 +91,12 @@ export default async function AdminEditSpotPage({
                 {r.notes && <span className="ml-2 italic">"{r.notes}"</span>}
               </div>
             </div>
-            <form action={deleteRatingAction.bind(null, r.id, id)}>
-              <button type="submit" className="text-red-400 hover:text-red-300 text-sm">Delete</button>
-            </form>
+            <div className="flex items-center gap-3">
+              <Link href={`/admin/ratings/${r.id}`} className="text-orange-400 hover:text-orange-300 text-sm">Edit</Link>
+              <form action={deleteRatingAction.bind(null, r.id, id)}>
+                <button type="submit" className="text-red-400 hover:text-red-300 text-sm">Delete</button>
+              </form>
+            </div>
           </div>
         ))}
         {spot.ratings.length === 0 && (

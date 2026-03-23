@@ -44,6 +44,21 @@ export async function deleteSpotAction(id: string) {
   redirect("/admin/spots");
 }
 
+export async function updateRatingAction(id: string, spotId: string, formData: FormData) {
+  await requireAdmin();
+  await prisma.rating.update({
+    where: { id },
+    data: {
+      overall: parseInt(formData.get("overall") as string),
+      sauce:   parseInt(formData.get("sauce") as string),
+      crispy:  parseInt(formData.get("crispy") as string),
+      value:   parseInt(formData.get("value") as string),
+      notes:   (formData.get("notes") as string) || null,
+    },
+  });
+  redirect(`/admin/spots/${spotId}`);
+}
+
 export async function deleteRatingAction(id: string, spotId: string) {
   await requireAdmin();
   await prisma.rating.delete({ where: { id } });

@@ -1,11 +1,45 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import SpotCard from "@/components/SpotCard";
 import { useUserLocation } from "@/hooks/useUserLocation";
 import type { SpotWithAvgRating } from "@/types";
 
 const MI_TO_KM = 1.60934;
+const CITY_STORAGE_KEY = "rw_city_override";
+
+const CITIES = [
+  { label: "Anchorage", lat: 61.2180556, lng: -149.9002778 },
+  { label: "Austin", lat: 30.267153, lng: -97.7430608 },
+  { label: "Boston", lat: 42.37, lng: -71.03 },
+  { label: "Burlington, VT", lat: 44.475742, lng: -73.2128511 },
+  { label: "Charlotte", lat: 35.2270869, lng: -80.8431267 },
+  { label: "Chicago", lat: 41.8781136, lng: -87.6297982 },
+  { label: "Columbus, OH", lat: 39.9611755, lng: -82.9987942 },
+  { label: "Dallas", lat: 32.7766642, lng: -96.7969879 },
+  { label: "Detroit", lat: 42.331427, lng: -83.0457538 },
+  { label: "El Paso", lat: 31.7775757, lng: -106.4424559 },
+  { label: "Fort Worth", lat: 32.7554883, lng: -97.3307658 },
+  { label: "Houston", lat: 29.7604267, lng: -95.3698028 },
+  { label: "Indianapolis", lat: 39.768403, lng: -86.158068 },
+  { label: "Jacksonville", lat: 30.3321838, lng: -81.655651 },
+  { label: "Keene", lat: 42.9337, lng: -72.2781 },
+  { label: "Killington", lat: 43.6776, lng: -82.7798 },
+  { label: "Los Angeles", lat: 34.0522342, lng: -118.2436849 },
+  { label: "Memphis", lat: 35.1495343, lng: -90.0489801 },
+  { label: "Montreal", lat: 45.5, lng: -73.56 },
+  { label: "New York", lat: 40.77, lng: -73.98 },
+  { label: "Ogden, UT", lat: 41.22, lng: -111.97 },
+  { label: "Philadelphia", lat: 39.9525839, lng: -75.1652215 },
+  { label: "Phoenix", lat: 33.4483771, lng: -112.0740373 },
+  { label: "Portland, OR", lat: 45.5122, lng: -122.6587 },
+  { label: "San Antonio", lat: 29.4241219, lng: -98.4936282 },
+  { label: "San Diego", lat: 32.715738, lng: -117.1610838 },
+  { label: "San Francisco", lat: 37.7749295, lng: -122.4194155 },
+  { label: "San Jose", lat: 37.3382082, lng: -121.8863286 },
+  { label: "Seattle", lat: 47.6062, lng: -122.3321 },
+  { label: "Toronto", lat: 43.6416827, lng: -79.3886019 },
+];
 
 const DISTANCE_OPTIONS = [
   { label: "Any distance", value: null },
@@ -40,7 +74,25 @@ function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): nu
 type Props = { spots: SpotWithAvgRating[] };
 
 export default function SpotsList({ spots }: Props) {
-  const location = useUserLocation();
+  const gps = useUserLocation();
+  const [cityOverride, setCityOverride] = useState<string>("");
+
+  // Restore city override from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(CITY_STORAGE_KEY);
+    if (saved) setCityOverride(saved);
+  }, []);
+
+  function handleCityChange(val: string) {
+    setCityOverride(val);
+    if (val) localStorage.setItem(CITY_STORAGE_KEY, val);
+    else localStorage.removeItem(CITY_STORAGE_KEY);
+  }
+
+  const selectedCity = CITIES.find(c => c.label === cityOverride) ?? null;
+  const location = selectedCity
+    ? { status: "granted" as const, lat: selectedCity.lat, lng: selectedCity.lng }
+    : gps;
   const hasLocation = location.status === "granted";
 
   const [query, setQuery] = useState("");
@@ -96,11 +148,14 @@ export default function SpotsList({ spots }: Props) {
     <div>
       <div className="flex items-baseline gap-3 mb-6">
         <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">Wing Spots</h1>
-        {location.status === "loading" && (
-          <span className="text-sm text-gray-500">
-            Finding your location<AnimatedDots />
-          </span>
-        )}
+        {cityOverride
+          ? <span className="text-sm text-orange-400">📍 {cityOverride}</span>
+          : gps.status === "loading" && (
+            <span className="text-sm text-gray-500">
+              Finding your location<AnimatedDots />
+            </span>
+          )
+        }
       </div>
       {/* Controls */}
       <div className="flex flex-wrap gap-3 mb-6 items-end">
@@ -113,6 +168,20 @@ export default function SpotsList({ spots }: Props) {
             className="w-full bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm placeholder-gray-600"
           />
         </div>
+        <div>
+          <label className="block text-xs text-gray-500 mb-1">Location</label>
+          <select
+            value={cityOverride}
+            onChange={(e) => handleCityChange(e.target.value)}
+            className="bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm"
+          >
+            <option value="">My Location</option>
+            {CITIES.map(c => (
+              <option key={c.label} value={c.label}>{c.label}</option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label className="block text-xs text-gray-500 mb-1">Sort by</label>
           <select

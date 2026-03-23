@@ -48,7 +48,20 @@ export default async function SpotPage({
         )}
       </div>
       <p className="text-gray-500 dark:text-gray-400 mb-6">
-        {[spot.address, spot.city, spot.state].filter(Boolean).join(", ")}
+        {(() => {
+          const addressText = [spot.address, spot.city, spot.state].filter(Boolean).join(", ");
+          const mapsUrl = addressText
+            ? `https://www.google.com/maps/search/${encodeURIComponent(addressText)}`
+            : spot.lat && spot.lng
+            ? `https://www.google.com/maps?q=${spot.lat},${spot.lng}`
+            : null;
+          if (!mapsUrl) return addressText || null;
+          return (
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 underline underline-offset-2">
+              {addressText || "View in Google Maps"}
+            </a>
+          );
+        })()}
       </p>
 
       {/* Score summary */}
