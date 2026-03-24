@@ -1,0 +1,254 @@
+{
+    "DistributionList": {
+        "Items": [
+            {
+                "Id": "E1GFON8TFLZUQB",
+                "ARN": "arn:aws:cloudfront::896690699626:distribution/E1GFON8TFLZUQB",
+                "ETag": "E3M5GD40OP58HA",
+                "Status": "Deployed",
+                "LastModifiedTime": "2026-03-08T17:56:39.228000+00:00",
+                "DomainName": "d1whpwkn0f11xi.cloudfront.net",
+                "Aliases": {
+                    "Quantity": 2,
+                    "Items": [
+                        "www.mampersat.com",
+                        "mampersat.com"
+                    ]
+                },
+                "Origins": {
+                    "Quantity": 1,
+                    "Items": [
+                        {
+                            "Id": "S3-mampersat.com",
+                            "DomainName": "mampersat.com.s3-website-us-east-1.amazonaws.com",
+                            "OriginPath": "",
+                            "CustomHeaders": {
+                                "Quantity": 0
+                            },
+                            "CustomOriginConfig": {
+                                "HTTPPort": 80,
+                                "HTTPSPort": 443,
+                                "OriginProtocolPolicy": "http-only",
+                                "OriginSslProtocols": {
+                                    "Quantity": 4,
+                                    "Items": [
+                                        "SSLv3",
+                                        "TLSv1",
+                                        "TLSv1.1",
+                                        "TLSv1.2"
+                                    ]
+                                },
+                                "OriginReadTimeout": 30,
+                                "OriginKeepaliveTimeout": 5
+                            },
+                            "ConnectionAttempts": 3,
+                            "ConnectionTimeout": 10,
+                            "OriginShield": {
+                                "Enabled": false
+                            },
+                            "OriginAccessControlId": ""
+                        }
+                    ]
+                },
+                "OriginGroups": {
+                    "Quantity": 0
+                },
+                "DefaultCacheBehavior": {
+                    "TargetOriginId": "S3-mampersat.com",
+                    "TrustedSigners": {
+                        "Enabled": false,
+                        "Quantity": 0
+                    },
+                    "TrustedKeyGroups": {
+                        "Enabled": false,
+                        "Quantity": 0
+                    },
+                    "ViewerProtocolPolicy": "redirect-to-https",
+                    "AllowedMethods": {
+                        "Quantity": 2,
+                        "Items": [
+                            "HEAD",
+                            "GET"
+                        ],
+                        "CachedMethods": {
+                            "Quantity": 2,
+                            "Items": [
+                                "HEAD",
+                                "GET"
+                            ]
+                        }
+                    },
+                    "SmoothStreaming": false,
+                    "Compress": false,
+                    "LambdaFunctionAssociations": {
+                        "Quantity": 0
+                    },
+                    "FunctionAssociations": {
+                        "Quantity": 0
+                    },
+                    "FieldLevelEncryptionId": "",
+                    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+                    "GrpcConfig": {
+                        "Enabled": false
+                    }
+                },
+                "CacheBehaviors": {
+                    "Quantity": 0
+                },
+                "CustomErrorResponses": {
+                    "Quantity": 0
+                },
+                "Comment": "",
+                "PriceClass": "PriceClass_All",
+                "Enabled": true,
+                "ViewerCertificate": {
+                    "CloudFrontDefaultCertificate": false,
+                    "ACMCertificateArn": "arn:aws:acm:us-east-1:896690699626:certificate/5a26686a-cc6e-4838-a77b-b9a56e181f84",
+                    "SSLSupportMethod": "sni-only",
+                    "MinimumProtocolVersion": "TLSv1.2_2019",
+                    "Certificate": "arn:aws:acm:us-east-1:896690699626:certificate/5a26686a-cc6e-4838-a77b-b9a56e181f84",
+                    "CertificateSource": "acm"
+                },
+                "Restrictions": {
+                    "GeoRestriction": {
+                        "RestrictionType": "none",
+                        "Quantity": 0
+                    }
+                },
+                "WebACLId": "",
+                "HttpVersion": "HTTP2",
+                "IsIPV6Enabled": true,
+                "AliasICPRecordals": [
+                    {
+                        "CNAME": "www.mampersat.com",
+                        "ICPRecordalStatus": "APPROVED"
+                    },
+                    {
+                        "CNAME": "mampersat.com",
+                        "ICPRecordalStatus": "APPROVED"
+                    }
+                ],
+                "Staging": false,
+                "ConnectionMode": "direct"
+            },
+            {
+                "Id": "E1V1IF8XXQS5YX",
+                "ARN": "arn:aws:cloudfront::896690699626:distribution/E1V1IF8XXQS5YX",
+                "ETag": "ENK43U4508CI6",
+                "Status": "Deployed",
+                "LastModifiedTime": "2021-02-06T15:03:38.881000+00:00",
+                "DomainName": "d21qnjt0pj7vnt.cloudfront.net",
+                "Aliases": {
+                    "Quantity": 2,
+                    "Items": [
+                        "ratewings.com",
+                        "www.ratewings.com"
+                    ]
+                },
+                "Origins": {
+                    "Quantity": 1,
+                    "Items": [
+                        {
+                            "Id": "S3-mampersat.com/ratewings",
+                            "DomainName": "mampersat.com.s3.amazonaws.com",
+                            "OriginPath": "/ratewings",
+                            "CustomHeaders": {
+                                "Quantity": 0
+                            },
+                            "S3OriginConfig": {
+                                "OriginAccessIdentity": "",
+                                "OriginReadTimeout": 30
+                            },
+                            "ConnectionAttempts": 3,
+                            "ConnectionTimeout": 10,
+                            "OriginShield": {
+                                "Enabled": false
+                            },
+                            "OriginAccessControlId": ""
+                        }
+                    ]
+                },
+                "OriginGroups": {
+                    "Quantity": 0
+                },
+                "DefaultCacheBehavior": {
+                    "TargetOriginId": "S3-mampersat.com/ratewings",
+                    "TrustedSigners": {
+                        "Enabled": false,
+                        "Quantity": 0
+                    },
+                    "TrustedKeyGroups": {
+                        "Enabled": false,
+                        "Quantity": 0
+                    },
+                    "ViewerProtocolPolicy": "redirect-to-https",
+                    "AllowedMethods": {
+                        "Quantity": 2,
+                        "Items": [
+                            "HEAD",
+                            "GET"
+                        ],
+                        "CachedMethods": {
+                            "Quantity": 2,
+                            "Items": [
+                                "HEAD",
+                                "GET"
+                            ]
+                        }
+                    },
+                    "SmoothStreaming": false,
+                    "Compress": false,
+                    "LambdaFunctionAssociations": {
+                        "Quantity": 0
+                    },
+                    "FunctionAssociations": {
+                        "Quantity": 0
+                    },
+                    "FieldLevelEncryptionId": "",
+                    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+                    "GrpcConfig": {
+                        "Enabled": false
+                    }
+                },
+                "CacheBehaviors": {
+                    "Quantity": 0
+                },
+                "CustomErrorResponses": {
+                    "Quantity": 0
+                },
+                "Comment": "",
+                "PriceClass": "PriceClass_All",
+                "Enabled": true,
+                "ViewerCertificate": {
+                    "CloudFrontDefaultCertificate": false,
+                    "ACMCertificateArn": "arn:aws:acm:us-east-1:896690699626:certificate/a4f9ce2a-a3b8-4837-aa53-e442eed37daa",
+                    "SSLSupportMethod": "sni-only",
+                    "MinimumProtocolVersion": "TLSv1.2_2019",
+                    "Certificate": "arn:aws:acm:us-east-1:896690699626:certificate/a4f9ce2a-a3b8-4837-aa53-e442eed37daa",
+                    "CertificateSource": "acm"
+                },
+                "Restrictions": {
+                    "GeoRestriction": {
+                        "RestrictionType": "none",
+                        "Quantity": 0
+                    }
+                },
+                "WebACLId": "",
+                "HttpVersion": "HTTP2",
+                "IsIPV6Enabled": true,
+                "AliasICPRecordals": [
+                    {
+                        "CNAME": "ratewings.com",
+                        "ICPRecordalStatus": "APPROVED"
+                    },
+                    {
+                        "CNAME": "www.ratewings.com",
+                        "ICPRecordalStatus": "APPROVED"
+                    }
+                ],
+                "Staging": false,
+                "ConnectionMode": "direct"
+            }
+        ]
+    }
+}
