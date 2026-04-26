@@ -30,10 +30,18 @@ export default function RatingForm({ spotId }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  function ensureUserCookie() {
+    if (!document.cookie.split("; ").find((c) => c.startsWith("rw_uid="))) {
+      const id = crypto.randomUUID();
+      document.cookie = `rw_uid=${id}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
+    ensureUserCookie();
 
     const res = await fetch("/api/ratings", {
       method: "POST",
