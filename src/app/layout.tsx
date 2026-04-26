@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={`${geist.variable} antialiased bg-gray-50 min-h-screen`}>
         <Nav />
         <main className="max-w-4xl mx-auto px-4 py-8">{children}</main>
+        <Footer />
       </body>
     </html>
   );
