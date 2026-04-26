@@ -19,7 +19,7 @@ export default function NewSpotPage() {
       address: form.get("address"),
       city: form.get("city"),
       state: form.get("state"),
-      imageUrl: form.get("imageUrl") || null,
+      imageUrl: null,
     };
 
     const res = await fetch("/api/spots", {
@@ -41,69 +41,58 @@ export default function NewSpotPage() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-6">Add a Wing Spot</h1>
+      <h1 className="text-3xl font-bold text-gray-100 mb-6">Add a Wing Spot</h1>
 
-      <form onSubmit={handleSubmit} className="bg-white border rounded-xl p-6 space-y-4">
+      <form onSubmit={handleSubmit} className="bg-gray-800 border border-gray-700 rounded-xl p-6 space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+          <label className="block text-sm font-medium text-gray-200 mb-1">
             Name <span className="text-red-500">*</span>
           </label>
           <input
             name="name"
             required
-            className="w-full border rounded-lg p-2 text-sm"
+            className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-sm text-gray-100 placeholder-gray-400"
             placeholder="Buffalo Wild Wings"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+          <label className="block text-sm font-medium text-gray-200 mb-1">
             Address <span className="text-red-500">*</span>
           </label>
           <input
             name="address"
-            className="w-full border rounded-lg p-2 text-sm"
+            className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-sm text-gray-100 placeholder-gray-400"
             placeholder="123 Main St"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            <label className="block text-sm font-medium text-gray-200 mb-1">
               City
             </label>
             <input
               name="city"
-              className="w-full border rounded-lg p-2 text-sm"
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-sm text-gray-100 placeholder-gray-400"
               placeholder="Austin"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            <label className="block text-sm font-medium text-gray-200 mb-1">
               State
             </label>
             <input
               name="state"
               maxLength={2}
-              className="w-full border rounded-lg p-2 text-sm uppercase"
+              className="w-full bg-gray-700 border border-gray-600 rounded-lg p-2 text-sm text-gray-100 placeholder-gray-400 uppercase"
               placeholder="TX"
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-            Image URL (optional)
-          </label>
-          <input
-            name="imageUrl"
-            type="url"
-            className="w-full border rounded-lg p-2 text-sm"
-            placeholder="https://..."
-          />
-        </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+{error && <p className="text-red-500 text-sm">{error}</p>}
 
         <button
           type="submit"
