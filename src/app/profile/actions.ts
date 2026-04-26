@@ -12,6 +12,10 @@ export async function updateNameAction(formData: FormData) {
   const name = (formData.get("name") as string)?.trim();
   if (!name) redirect("/profile");
 
-  await prisma.user.update({ where: { id: userId }, data: { name } });
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: { name },
+    create: { id: userId, name, email: `${userId}@anon.ratewings` },
+  });
   redirect("/profile");
 }
