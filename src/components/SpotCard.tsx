@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
 import type { SpotWithAvgRating } from "@/types";
 
 type Props = {
@@ -12,19 +9,10 @@ type Props = {
 export default function SpotCard({ spot, distanceKm }: Props) {
   const rating = spot.avgOverall?.toFixed(1) ?? "—";
   const heat = spot.avgSauce?.toFixed(1) ?? null;
-  const [imgFailed, setImgFailed] = useState(false);
 
   return (
     <Link href={`/spots/${spot.id}`}>
       <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 hover:shadow-md transition-shadow">
-        {spot.imageUrl && !imgFailed && (
-          <img
-            src={spot.imageUrl}
-            alt={spot.name}
-            className="w-full h-40 object-cover rounded-lg mb-3"
-            onError={() => setImgFailed(true)}
-          />
-        )}
         <div className="flex items-start justify-between gap-2">
           <div>
             <h2 className="font-semibold text-gray-100">{spot.name}</h2>
