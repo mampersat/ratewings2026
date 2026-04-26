@@ -68,23 +68,23 @@ export default async function LeaderboardPage() {
         <div className="space-y-3">
           {spots.map((spot, i) => (
             <Link key={spot.id} href={`/spots/${spot.id}`}>
-              <div className="bg-white border rounded-xl p-4 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <span className="text-2xl font-bold text-gray-300 w-8 text-center">
+              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 flex items-center gap-4 hover:shadow-md transition-shadow">
+                <span className="text-2xl font-bold text-gray-400 dark:text-gray-500 w-8 text-center">
                   {i + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-700 dark:text-gray-200 truncate">
+                  <p className="font-semibold text-gray-800 dark:text-gray-100 truncate">
                     {spot.name}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {spot.city}, {spot.state} · {spot.totalRatings} ratings
+                    {[spot.city, spot.state].filter(Boolean).join(", ")} · {spot.totalRatings} ratings
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-orange-500">
                     {spot.avgOverall.toFixed(1)}
                   </p>
-                  <p className="text-xs text-gray-400">overall</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">🌶 {spot.avgSauce.toFixed(1)} heat</p>
                 </div>
               </div>
             </Link>

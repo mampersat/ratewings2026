@@ -25,6 +25,8 @@ model Spot {
   city      String
   state     String
   imageUrl  String?
+  lat       Float?
+  lng       Float?
   createdAt DateTime @default(now())
 
   ratings Rating[]
@@ -43,6 +45,4 @@ model Rating {
 
   spot Spot @relation(fields: [spotId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([spotId, userId]) // one rating per user per spot
 }

@@ -4,7 +4,12 @@
       "Bash(source:*)",
       "Bash(docker:*)",
       "Bash(cat)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(railway logs:*)",
+      "Bash(railway status:*)",
+      "Bash(railway service:*)",
+      "Bash(railway ps:*)",
+      "Bash(railway:*)"
     ]
   }
 }

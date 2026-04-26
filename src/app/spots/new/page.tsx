@@ -62,7 +62,6 @@ export default function NewSpotPage() {
           </label>
           <input
             name="address"
-            required
             className="w-full border rounded-lg p-2 text-sm"
             placeholder="123 Main St"
           />
@@ -71,22 +70,20 @@ export default function NewSpotPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-              City <span className="text-red-500">*</span>
+              City
             </label>
             <input
               name="city"
-              required
               className="w-full border rounded-lg p-2 text-sm"
               placeholder="Austin"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
-              State <span className="text-red-500">*</span>
+              State
             </label>
             <input
               name="state"
-              required
               maxLength={2}
               className="w-full border rounded-lg p-2 text-sm uppercase"
               placeholder="TX"

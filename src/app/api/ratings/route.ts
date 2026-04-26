@@ -34,10 +34,8 @@ export async function POST(req: Request) {
     create: { id: userId, name: "Anonymous", email: `${userId}@anon.ratewings` },
   });
 
-  const rating = await prisma.rating.upsert({
-    where: { spotId_userId: { spotId, userId } },
-    update: { overall, sauce, crispy, value, notes: notes ?? null },
-    create: { spotId, userId, overall, sauce, crispy, value, notes: notes ?? null },
+  const rating = await prisma.rating.create({
+    data: { spotId, userId, overall, sauce, crispy, value, notes: notes ?? null },
   });
 
   return NextResponse.json(rating, { status: 201 });
