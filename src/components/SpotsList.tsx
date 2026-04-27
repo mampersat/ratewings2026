@@ -12,6 +12,7 @@ const CITIES = [
   { label: "Anchorage", lat: 61.2180556, lng: -149.9002778 },
   { label: "Austin", lat: 30.267153, lng: -97.7430608 },
   { label: "Boston", lat: 42.37, lng: -71.03 },
+  { label: "Buffalo, NY", lat: 42.8864468, lng: -78.8783689 },
   { label: "Burlington, VT", lat: 44.475742, lng: -73.2128511 },
   { label: "Charlotte", lat: 35.2270869, lng: -80.8431267 },
   { label: "Chicago", lat: 41.8781136, lng: -87.6297982 },
