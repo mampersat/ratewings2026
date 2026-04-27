@@ -9,7 +9,20 @@
       "Bash(railway status:*)",
       "Bash(railway service:*)",
       "Bash(railway ps:*)",
-      "Bash(railway:*)"
+      "Bash(railway:*)",
+      "Bash(pg_dump --version)",
+      "Bash(npm run *)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_o4tdKpG2xaOw@ep-royal-morning-anhq4a8a.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require\" npx prisma *)",
+      "Bash(PGPASSWORD=npg_o4tdKpG2xaOw psql \"postgresql://neondb_owner@ep-royal-morning-anhq4a8a.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require\" -c 'SELECT id, name, \"imageUrl\" FROM \"Spot\" WHERE lower\\(name\\) LIKE lower\\('\"'\"'%northwoods%'\"'\"'\\);')",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Hide broken spot images gracefully instead of showing empty space *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'Remove image display from spot cards *)",
+      "Bash(git commit -m 'Dark theme for add spot form, remove image URL field *)",
+      "Bash(git commit -m 'Add footer with git commit SHA version tracking *)",
+      "Bash(git commit -m 'Set rw_uid cookie client-side on first rating submission *)",
+      "Bash(git commit -m 'Add user profile page and footer identity link *)",
+      "Bash(git commit *)"
     ]
   }
 }
