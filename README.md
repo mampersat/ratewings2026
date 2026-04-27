@@ -26,14 +26,14 @@ RateWings lets you find chicken wing spots near you, rate them on four dimension
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5 (strict) |
-| Styling | Tailwind CSS 4 |
-| ORM | Prisma 7 + `@prisma/adapter-pg` |
-| Database | PostgreSQL (Neon) |
-| Hosting | Vercel |
+| Layer | Tech | Link |
+| --- | --- | --- |
+| Framework | Next.js 16 (App Router) | — |
+| Language | TypeScript 5 (strict) | — |
+| Styling | Tailwind CSS 4 | — |
+| ORM | Prisma 7 + `@prisma/adapter-pg` | — |
+| Database | PostgreSQL (Neon) | [Neon Dashboard](https://console.neon.tech/app/projects/damp-mud-32435268?branchId=br-late-silence-anq6li88) |
+| Hosting | Vercel | [Vercel Dashboard](https://vercel.com/msheppard-8671s-projects/ratewings2026) |
 
 ## Local development
 
