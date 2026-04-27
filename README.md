@@ -21,7 +21,6 @@ RateWings lets you find chicken wing spots near you, rate them on four dimension
 - Browse and filter wing spots by distance, rating, and city
 - Rate spots on a 1–10 scale across four categories
 - Leaderboard ranked by average overall score
-- Admin panel for managing spots, editing ratings, and merging duplicates
 - Claim your ratings with a display name — no sign-up required
 
 ## Stack
@@ -68,7 +67,6 @@ Open [http://localhost:3000](http://localhost:3000).
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | Postgres connection string |
-| `ADMIN_PASSWORD` | Password for `/admin` |
 
 ## Deployment
 
