@@ -28,7 +28,7 @@ async function getLeaderboard(): Promise<LeaderboardEntry[]> {
 
   for (const spot of spots) {
     const n = spot.ratings.length;
-    if (n === 0) continue;
+    if (n < 2) continue;
 
     const avg = (key: "overall" | "sauce" | "crispy" | "value") =>
       spot.ratings.reduce((sum, r) => sum + r[key], 0) / n;
