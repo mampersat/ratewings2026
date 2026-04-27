@@ -22,7 +22,7 @@ export default async function Footer() {
         {displayName}
       </Link>
       <span className="mx-2">·</span>
-      RateWings
+      <a href="https://github.com/mampersat/ratewings2026" className="hover:text-gray-300 transition-colors" target="_blank" rel="noopener noreferrer">RateWings</a>
       <span className="mx-2">·</span>
       <span className="font-mono">{sha}</span>
     </footer>
