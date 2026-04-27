@@ -10,6 +10,12 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 export const metadata: Metadata = {
   title: "RateWings — Discover & Rate Chicken Wings",
   description: "Find, review, and rank the best chicken wing spots.",
+  appleWebApp: {
+    capable: true,
+    title: "RateWings",
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: { telephone: false },
 };
 
 export default function RootLayout({
