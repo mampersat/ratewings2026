@@ -8,6 +8,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-00e599?logo=postgresql&logoColor=white)
 ![Deployed on Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 <!-- Add a screenshot: drop a file at public/screenshot.png and uncomment below -->
 <!-- ![RateWings Screenshot](public/screenshot.png) -->
