@@ -24,6 +24,8 @@ export default async function Footer() {
       <span className="mx-2">·</span>
       <a href="https://github.com/mampersat/ratewings2026" className="hover:text-gray-300 transition-colors" target="_blank" rel="noopener noreferrer">RateWings</a>
       <span className="mx-2">·</span>
+      <a href="https://ratewings.wordpress.com/" className="hover:text-gray-300 transition-colors" target="_blank" rel="noopener noreferrer">Blog</a>
+      <span className="mx-2">·</span>
       <span className="font-mono">{sha}</span>
     </footer>
   );
