@@ -68,7 +68,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | Postgres connection string |
-| `ADMIN_PASSWORD` | Password for `/admin` (defaults to `"admin"`) |
+| `ADMIN_PASSWORD` | Password for `/admin` |
 
 ## Deployment
 
