@@ -4,11 +4,13 @@
 RateWings is a Next.js + TypeScript app for discovering, reviewing, and ranking chicken wing spots.
 
 ## Stack
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS v4
-- **ORM**: Prisma 7 (PostgreSQL)
+- **ORM**: Prisma 7 + `@prisma/adapter-pg` (PostgreSQL)
 - **Runtime**: Node.js 22+
+- **Hosting**: Vercel
+- **Database**: Neon (PostgreSQL)
 
 ## Conventions
 
@@ -45,15 +47,16 @@ RateWings is a Next.js + TypeScript app for discovering, reviewing, and ranking 
 Copy `.env.example` to `.env.local` and fill in:
 - `DATABASE_URL` — Postgres connection string (local: `postgresql://ratewings:ratewings@localhost:5432/ratewings`)
 - `ADMIN_PASSWORD` — Password for `/admin` (defaults to `"admin"` if unset)
-- `PROD_DB_URL` — Production Railway DB URL (used by sync script only)
+- `PROD_DB_URL` — Production Neon DB URL (used by sync script and for pointing local dev at prod)
 
 ## Deployment
-- **Platform**: Railway
-- **Database**: PostgreSQL hosted on Railway
-- To get the production `DATABASE_URL`, run: `railway variables` (requires Railway CLI + login)
-- To run migrations against production: `DATABASE_URL=<prod-url> npx prisma migrate deploy`
+- **Platform**: Vercel — auto-deploys on push to `main`. Build runs `prisma generate`, `prisma migrate deploy`, then `next build`.
+- **Database**: Neon (PostgreSQL) — see [Neon dashboard](https://console.neon.tech/app/projects/damp-mud-32435268?branchId=br-late-silence-anq6li88)
+- **Dashboards**: [Vercel](https://vercel.com/msheppard-8671s-projects/ratewings2026)
+- To run migrations against production manually: `DATABASE_URL=<prod-url> npx prisma migrate deploy` (normally not needed — Vercel build does this)
 - To import seed data against production: `DATABASE_URL=<prod-url> python3 scripts/import-wings-db.py`
 - To sync local DB → prod (destructive): `./scripts/sync-db-to-prod.sh` (reads `PROD_DB_URL` from `.env.local`)
+- To run the local dev server against the prod DB: `DATABASE_URL="$(grep ^PROD_DB_URL .env.local | cut -d= -f2- | tr -d '"')" npm run dev`
 
 ## Dev workflow
 ```bash
