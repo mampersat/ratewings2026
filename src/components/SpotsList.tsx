@@ -11,6 +11,7 @@ const CITY_STORAGE_KEY = "rw_city_override";
 const CITIES = [
   { label: "Anchorage", lat: 61.2180556, lng: -149.9002778 },
   { label: "Austin", lat: 30.267153, lng: -97.7430608 },
+  { label: "Buffalo", lat: 42.8864468, lng: -78.8783689 },
   { label: "Boston", lat: 42.37, lng: -71.03 },
   { label: "Buffalo, NY", lat: 42.9023, lng: -78.868 },
   { label: "Burlington, VT", lat: 44.475742, lng: -73.2128511 },
@@ -25,6 +26,7 @@ const CITIES = [
   { label: "Indianapolis", lat: 39.768403, lng: -86.158068 },
   { label: "Jacksonville", lat: 30.3321838, lng: -81.655651 },
   { label: "Keene", lat: 42.9337, lng: -72.2781 },
+  { label: "Las Vegas", lat: 36.1699412, lng: -115.1398296 },
   { label: "Killington", lat: 43.6776, lng: -82.7798 },
   { label: "Los Angeles", lat: 34.0522342, lng: -118.2436849 },
   { label: "Memphis", lat: 35.1495343, lng: -90.0489801 },
