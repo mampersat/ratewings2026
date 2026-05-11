@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_COMMIT_SHA: commitSha,
   },
+  async redirects() {
+    return [
+      {
+        source: "/grafana",
+        destination:
+          "https://matthewsheppard.grafana.net/public-dashboards/96bdb431bfd545e884b9e336d6609236",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
