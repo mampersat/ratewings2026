@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
+import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/honeypot";
 
 const COOKIE = "rw_uid";
 
@@ -13,6 +14,11 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
+
+  if (isHoneypotTripped(body[HONEYPOT_FIELD])) {
+    return NextResponse.json({ ok: true }, { status: 201 });
+  }
+
   const { spotId, overall, sauce, crispy, value, notes } = body;
 
   if (!spotId) {

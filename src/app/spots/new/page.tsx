@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import HoneypotField from "@/components/HoneypotField";
+import { HONEYPOT_FIELD } from "@/lib/honeypot";
 
 export default function NewSpotPage() {
   const router = useRouter();
@@ -20,6 +22,7 @@ export default function NewSpotPage() {
       city: form.get("city"),
       state: form.get("state"),
       imageUrl: null,
+      [HONEYPOT_FIELD]: form.get(HONEYPOT_FIELD) ?? "",
     };
 
     const res = await fetch("/api/spots", {
@@ -44,6 +47,7 @@ export default function NewSpotPage() {
       <h1 className="text-3xl font-bold text-gray-100 mb-6">Add a Wing Spot</h1>
 
       <form onSubmit={handleSubmit} className="bg-gray-800 border border-gray-700 rounded-xl p-6 space-y-4">
+        <HoneypotField />
         <div>
           <label className="block text-sm font-medium text-gray-200 mb-1">
             Name <span className="text-red-500">*</span>

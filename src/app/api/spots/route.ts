@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/honeypot";
 
 export async function GET() {
   const spots = await prisma.spot.findMany({
@@ -23,6 +24,11 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json();
+
+  if (isHoneypotTripped(body[HONEYPOT_FIELD])) {
+    return NextResponse.json({ error: "Submission rejected" }, { status: 400 });
+  }
+
   const { name, address, city, state, imageUrl } = body;
 
   if (!name || !address || !city || !state) {

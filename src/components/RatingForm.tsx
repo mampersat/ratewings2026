@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import HoneypotField from "./HoneypotField";
+import { HONEYPOT_FIELD } from "@/lib/honeypot";
 
 type Props = {
   spotId: string;
@@ -37,16 +39,18 @@ export default function RatingForm({ spotId }: Props) {
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
     ensureUserCookie();
 
+    const honeypot = new FormData(e.currentTarget).get(HONEYPOT_FIELD) ?? "";
+
     const res = await fetch("/api/ratings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ spotId, ...scores, notes }),
+      body: JSON.stringify({ spotId, ...scores, notes, [HONEYPOT_FIELD]: honeypot }),
     });
 
     if (!res.ok) {
@@ -64,6 +68,7 @@ export default function RatingForm({ spotId }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <HoneypotField />
       {FIELDS.map(({ key, label }) => (
         <div key={key}>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">

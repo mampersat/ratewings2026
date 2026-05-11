@@ -22,7 +22,9 @@
       "Bash(git commit -m 'Add footer with git commit SHA version tracking *)",
       "Bash(git commit -m 'Set rw_uid cookie client-side on first rating submission *)",
       "Bash(git commit -m 'Add user profile page and footer identity link *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(npx -y vercel@latest env pull --environment=production /tmp/rw-prod.env --yes)",
+      "Bash(git *)"
     ]
   }
 }
