@@ -15,6 +15,12 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 
+  // Web-of-trust link. Non-null = trusted (vouched for by trustedById).
+  // A root user is self-vouched (trustedById = id).
+  trustedById String?
+  trustedBy   User?   @relation("UserTrust", fields: [trustedById], references: [id], onDelete: SetNull)
+  trusts      User[]  @relation("UserTrust")
+
   ratings Rating[]
 }
 
