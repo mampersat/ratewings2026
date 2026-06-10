@@ -43,3 +43,6 @@ next-env.d.ts
 /src/generated/prisma
 venv
 
+
+# Machine-local Claude Code settings (may contain secrets) — never commit
+.claude/settings.local.json
