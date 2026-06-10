@@ -79,9 +79,11 @@ export default async function SpotPage({
         ))}
       </div>
 
-      {/* Rating form */}
-      <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-8">
-        <h2 className="text-lg font-semibold text-gray-100 mb-4">Leave a Rating</h2>
+      {/* Rating form — the one place you act, so it gets the warm "station" treatment */}
+      <div className="bg-[#1a1614] border-t-2 border-t-orange-500 border-x border-b border-[#2c2521] rounded-xl p-6 mb-8">
+        <h2 className="font-display text-2xl uppercase tracking-[0.15em] text-[#f4ede2] mb-5">
+          Rate the Wings
+        </h2>
         <RatingForm spotId={spot.id} />
       </div>
 

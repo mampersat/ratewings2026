@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Geist } from "next/font/google";
+import { Geist, Anton } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
+const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-anton" });
 
 export const metadata: Metadata = {
   title: "RateWings — Discover & Rate Chicken Wings",
@@ -34,7 +35,7 @@ export default function RootLayout({
           gtag('config', 'G-5JP0470JY3');
         `}</Script>
       </head>
-      <body className={`${geist.variable} antialiased bg-gray-50 min-h-screen`}>
+      <body className={`${geist.variable} ${anton.variable} antialiased bg-gray-50 min-h-screen`}>
         <Nav />
         <main className="max-w-4xl mx-auto px-4 py-8">{children}</main>
         <Footer />

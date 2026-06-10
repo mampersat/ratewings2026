@@ -1,19 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import HoneypotField from "@/components/HoneypotField";
+import TurnstileWidget from "@/components/TurnstileWidget";
 import { HONEYPOT_FIELD } from "@/lib/honeypot";
+import { TURNSTILE_FIELD } from "@/lib/turnstile";
+
+const TURNSTILE_ENABLED = !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export default function NewSpotPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const handleToken = useCallback((token: string) => setTurnstileToken(token), []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
+
+    if (TURNSTILE_ENABLED && !turnstileToken) {
+      setError("Please complete the verification challenge");
+      setSubmitting(false);
+      return;
+    }
 
     const form = new FormData(e.currentTarget);
     const body = {
@@ -23,6 +35,7 @@ export default function NewSpotPage() {
       state: form.get("state"),
       imageUrl: null,
       [HONEYPOT_FIELD]: form.get(HONEYPOT_FIELD) ?? "",
+      [TURNSTILE_FIELD]: turnstileToken,
     };
 
     const res = await fetch("/api/spots", {
@@ -96,11 +109,13 @@ export default function NewSpotPage() {
         </div>
 
 
+<TurnstileWidget onToken={handleToken} theme="dark" />
+
 {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || (TURNSTILE_ENABLED && !turnstileToken)}
           className="w-full bg-orange-500 text-white py-2 rounded-lg font-medium hover:bg-orange-600 disabled:opacity-50"
         >
           {submitting ? "Adding..." : "Add Spot"}

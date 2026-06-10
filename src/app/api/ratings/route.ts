@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { prisma } from "@/lib/db";
 import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/honeypot";
+import { TURNSTILE_FIELD, verifyTurnstile } from "@/lib/turnstile";
 
 const COOKIE = "rw_uid";
 
@@ -17,6 +18,12 @@ export async function POST(req: Request) {
 
   if (isHoneypotTripped(body[HONEYPOT_FIELD])) {
     return NextResponse.json({ ok: true }, { status: 201 });
+  }
+
+  const hdrs = await headers();
+  const remoteIp = hdrs.get("x-forwarded-for")?.split(",")[0]?.trim() ?? undefined;
+  if (!(await verifyTurnstile(body[TURNSTILE_FIELD], remoteIp))) {
+    return NextResponse.json({ error: "Verification failed" }, { status: 400 });
   }
 
   const { spotId, overall, sauce, crispy, value, notes } = body;

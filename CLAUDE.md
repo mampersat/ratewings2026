@@ -48,6 +48,8 @@ Copy `.env.example` to `.env.local` and fill in:
 - `DATABASE_URL` — Postgres connection string (local: `postgresql://ratewings:ratewings@localhost:5432/ratewings`)
 - `ADMIN_PASSWORD` — Password for `/admin` (defaults to `"admin"` if unset)
 - `PROD_DB_URL` — Production Neon DB URL (used by sync script and for pointing local dev at prod)
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — Cloudflare Turnstile site key (public). If unset, the widget is hidden and no challenge is shown.
+- `TURNSTILE_SECRET_KEY` — Cloudflare Turnstile secret. If unset, verification is bypassed in dev but **fails closed in production**.
 
 ## Deployment
 - **Platform**: Vercel — auto-deploys on push to `main`. Build runs `prisma generate`, `prisma migrate deploy`, then `next build`.
