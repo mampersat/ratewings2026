@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
+import HeatBar from "@/components/HeatBar";
 
 export const dynamic = "force-dynamic";
 
@@ -54,43 +55,77 @@ export default async function LeaderboardPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mb-6">Leaderboard</h1>
-
-      {spots.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400 text-center py-12">
-          No rated spots yet.{" "}
-          <Link href="/spots" className="text-orange-500 underline">
-            Browse spots
-          </Link>{" "}
-          and leave the first rating!
+      <header className="pt-6 pb-2">
+        <h1 className="font-display text-4xl sm:text-5xl uppercase tracking-tight text-gray-900 dark:text-[#f4ede2]">
+          Standings
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-[#9a8d82]">
+          {spots.length > 0
+            ? `${spots.length} spots ranked by overall score — two ratings to qualify.`
+            : "The board is empty for now."}
         </p>
-      ) : (
-        <div className="space-y-3">
-          {spots.map((spot, i) => (
-            <Link key={spot.id} href={`/spots/${spot.id}`}>
-              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <span className="text-2xl font-bold text-gray-400 dark:text-gray-500 w-8 text-center">
-                  {i + 1}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-800 dark:text-gray-100 truncate">
-                    {spot.name}
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {[spot.city, spot.state].filter(Boolean).join(", ")} · {spot.totalRatings} ratings
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-orange-500">
-                    {spot.avgOverall.toFixed(1)}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">🌶 {spot.avgSauce.toFixed(1)} heat</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+      </header>
+
+      <div className="mt-6 rounded-2xl bg-[#1a1614] border border-[#2c2521] overflow-hidden">
+        {spots.length === 0 ? (
+          <div className="p-8 sm:p-12 text-center">
+            <p className="font-display text-xs uppercase tracking-[0.28em] text-orange-500">
+              ♛ No champion yet
+            </p>
+            <h2 className="mt-3 font-display text-3xl uppercase text-[#f4ede2]">
+              The throne is empty
+            </h2>
+            <p className="mt-3 text-[#9a8d82] max-w-md mx-auto">
+              A spot needs two ratings to enter the standings.{" "}
+              <Link href="/spots" className="text-orange-500 hover:text-orange-400">
+                Browse spots
+              </Link>{" "}
+              and crown a champion.
+            </p>
+          </div>
+        ) : (
+          <ol className="p-3 sm:p-4">
+            {spots.map((spot, i) => {
+              const rank = i + 1;
+              const top = rank === 1;
+              return (
+                <li key={spot.id}>
+                  <Link
+                    href={`/spots/${spot.id}`}
+                    className="group flex items-center gap-3 sm:gap-4 rounded-xl px-2 sm:px-3 py-3 hover:bg-[#221b18] transition-colors"
+                  >
+                    <span
+                      className={`font-display text-2xl tabular-nums w-9 text-center transition-colors ${
+                        top
+                          ? "text-orange-500"
+                          : "text-[#5c534c] group-hover:text-orange-500"
+                      }`}
+                    >
+                      {String(rank).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-display text-lg uppercase leading-tight text-[#f4ede2] truncate">
+                        {top && <span className="text-orange-500 mr-1.5">♛</span>}
+                        {spot.name}
+                      </p>
+                      <p className="text-xs text-[#9a8d82] truncate">
+                        {[spot.city, spot.state].filter(Boolean).join(", ")} ·{" "}
+                        {spot.totalRatings} ratings
+                      </p>
+                    </div>
+                    <div className="hidden sm:block w-24 shrink-0">
+                      <HeatBar value={spot.avgSauce} />
+                    </div>
+                    <span className="font-display text-2xl text-orange-500 tabular-nums w-12 text-right">
+                      {spot.avgOverall.toFixed(1)}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
     </div>
   );
 }

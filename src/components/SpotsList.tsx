@@ -149,12 +149,12 @@ export default function SpotsList({ spots }: Props) {
 
   return (
     <div>
-      <div className="flex items-baseline gap-3 mb-6">
-        <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">Wing Spots</h1>
+      <div className="flex items-baseline gap-3 mb-6 pt-6">
+        <h1 className="font-display text-4xl sm:text-5xl uppercase tracking-tight text-gray-900 dark:text-[#f4ede2]">Wing Spots</h1>
         {cityOverride
           ? <span className="text-sm text-orange-400">📍 {cityOverride}</span>
           : gps.status === "loading" && (
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-[#9a8d82]">
               Finding your location<AnimatedDots />
             </span>
           )
@@ -163,20 +163,20 @@ export default function SpotsList({ spots }: Props) {
       {/* Controls */}
       <div className="flex flex-wrap gap-3 mb-6 items-end">
         <div className="flex-1 min-w-48">
-          <label className="block text-xs text-gray-500 mb-1">Search</label>
+          <label className="block text-xs text-gray-500 dark:text-[#9a8d82] mb-1">Search</label>
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Name or city…"
-            className="w-full bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm placeholder-gray-600"
+            className="w-full bg-[#120f0d] border border-[#3a322d] text-[#f4ede2] focus:border-orange-500 focus:outline-none rounded-lg px-3 py-1.5 text-sm placeholder:text-[#6b6058]"
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Location</label>
+          <label className="block text-xs text-gray-500 dark:text-[#9a8d82] mb-1">Location</label>
           <select
             value={cityOverride}
             onChange={(e) => handleCityChange(e.target.value)}
-            className="bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm"
+            className="bg-[#120f0d] border border-[#3a322d] text-[#f4ede2] focus:border-orange-500 focus:outline-none rounded-lg px-3 py-1.5 text-sm"
           >
             <option value="">My Location</option>
             {CITIES.map(c => (
@@ -186,11 +186,11 @@ export default function SpotsList({ spots }: Props) {
         </div>
 
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Sort by</label>
+          <label className="block text-xs text-gray-500 dark:text-[#9a8d82] mb-1">Sort by</label>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortKey)}
-            className="bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm"
+            className="bg-[#120f0d] border border-[#3a322d] text-[#f4ede2] focus:border-orange-500 focus:outline-none rounded-lg px-3 py-1.5 text-sm"
           >
             <option value="distance" disabled={!hasLocation}>
               {hasLocation ? "Distance" : "Distance (no location)"}
@@ -203,12 +203,12 @@ export default function SpotsList({ spots }: Props) {
         </div>
 
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Distance</label>
+          <label className="block text-xs text-gray-500 dark:text-[#9a8d82] mb-1">Distance</label>
           <select
             value={maxMiles ?? ""}
             onChange={(e) => setMaxMiles(e.target.value ? Number(e.target.value) : null)}
             disabled={!hasLocation}
-            className="bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm disabled:opacity-40"
+            className="bg-[#120f0d] border border-[#3a322d] text-[#f4ede2] focus:border-orange-500 focus:outline-none rounded-lg px-3 py-1.5 text-sm disabled:opacity-40"
           >
             {DISTANCE_OPTIONS.map((o) => (
               <option key={o.label} value={o.value ?? ""}>{o.label}</option>
@@ -217,11 +217,11 @@ export default function SpotsList({ spots }: Props) {
         </div>
 
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Min ratings</label>
+          <label className="block text-xs text-gray-500 dark:text-[#9a8d82] mb-1">Min ratings</label>
           <select
             value={minRatings}
             onChange={(e) => setMinRatings(Number(e.target.value))}
-            className="bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-1.5 text-sm"
+            className="bg-[#120f0d] border border-[#3a322d] text-[#f4ede2] focus:border-orange-500 focus:outline-none rounded-lg px-3 py-1.5 text-sm"
           >
             {RATINGS_OPTIONS.map((o) => (
               <option key={o.label} value={o.value}>{o.label}</option>
@@ -229,13 +229,13 @@ export default function SpotsList({ spots }: Props) {
           </select>
         </div>
 
-        <p className="text-xs text-gray-500 ml-auto self-end pb-1.5">
+        <p className="text-xs text-gray-500 dark:text-[#9a8d82] ml-auto self-end pb-1.5">
           {sorted.length} spot{sorted.length !== 1 ? "s" : ""}
         </p>
       </div>
 
       {sorted.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">No spots match your filters.</p>
+        <p className="text-gray-500 dark:text-[#9a8d82] text-center py-12">No spots match your filters.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((spot) => (
