@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import Link from "next/link";
 import { updateSpotAction, deleteRatingAction } from "../../actions";
 import LatLngPaster from "./LatLngPaster";
+import AddressPaster from "./AddressPaster";
 
 export const dynamic = "force-dynamic";
 
@@ -44,21 +45,11 @@ export default async function AdminEditSpotPage({
             <input name="name" defaultValue={spot.name} required
               className="w-full bg-gray-900 border border-gray-600 text-gray-100 rounded-lg p-2 text-sm" />
           </div>
-          <div className="col-span-2">
-            <label className="block text-sm text-gray-400 mb-1">Address</label>
-            <input name="address" defaultValue={spot.address}
-              className="w-full bg-gray-900 border border-gray-600 text-gray-100 rounded-lg p-2 text-sm" />
-          </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">City</label>
-            <input name="city" defaultValue={spot.city}
-              className="w-full bg-gray-900 border border-gray-600 text-gray-100 rounded-lg p-2 text-sm" />
-          </div>
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">State</label>
-            <input name="state" defaultValue={spot.state} maxLength={2}
-              className="w-full bg-gray-900 border border-gray-600 text-gray-100 rounded-lg p-2 text-sm uppercase" />
-          </div>
+          <AddressPaster
+            defaultAddress={spot.address}
+            defaultCity={spot.city}
+            defaultState={spot.state}
+          />
           <LatLngPaster defaultLat={spot.lat} defaultLng={spot.lng} />
           <div className="col-span-2">
             <a
