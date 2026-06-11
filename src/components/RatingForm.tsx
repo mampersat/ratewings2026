@@ -6,29 +6,14 @@ import HoneypotField from "./HoneypotField";
 import TurnstileWidget from "./TurnstileWidget";
 import { HONEYPOT_FIELD } from "@/lib/honeypot";
 import { TURNSTILE_FIELD } from "@/lib/turnstile";
+import { RATING_VERDICTS, type RatingKey } from "@/lib/verdicts";
+import { HEAT_RAMP } from "@/lib/heat";
 
 const TURNSTILE_ENABLED = !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type Props = {
   spotId: string;
 };
-
-type RatingKey = "overall" | "sauce" | "crispy" | "value";
-
-// Verdict words, indexed by score (1–10 → index 0–9). The control says what
-// it measures, not just a number — and Heat reads as a spice scale, not quality.
-const VERDICTS: Record<RatingKey, readonly string[]> = {
-  overall: ["Skip it", "Rough", "Meh", "Below par", "Decent", "Pretty good", "Solid", "Great", "Elite", "Legendary"],
-  sauce: ["Mild", "Mild", "Warm", "Warm", "Medium", "Medium-hot", "Hot", "Fiery", "Scorching", "Nuclear"],
-  crispy: ["Soggy", "Soggy", "Limp", "Soft", "Some bite", "Crisp", "Crispy", "Very crispy", "Shatter-crisp", "Shatter-crisp"],
-  value: ["Rip-off", "Rip-off", "Pricey", "Pricey", "Fair", "Fair", "Good deal", "Great deal", "Steal", "Steal"],
-};
-
-// The signature: a literal Scoville ramp — amber climbing to nuclear red.
-const HEAT_RAMP = [
-  "#fde047", "#facc15", "#fbbf24", "#f59e0b", "#f97316",
-  "#ea580c", "#ef4444", "#dc2626", "#b91c1c", "#7f1d1d",
-];
 
 const AXES: { key: RatingKey; label: string; heat?: boolean; hero?: boolean }[] = [
   { key: "overall", label: "Overall", hero: true },
@@ -184,7 +169,7 @@ export default function RatingForm({ spotId }: Props) {
         </span>
         <div className="pb-2">
           <p className="font-display text-2xl uppercase tracking-wide leading-none">
-            {VERDICTS.overall[overall - 1]}
+            {RATING_VERDICTS.overall[overall - 1]}
           </p>
           <p className="text-xs uppercase tracking-[0.2em] text-[#9a8d82] mt-1">
             Overall · {overall}/10
@@ -201,7 +186,7 @@ export default function RatingForm({ spotId }: Props) {
                 {label}
               </span>
               <span className="text-xs uppercase tracking-wide text-[#9a8d82]">
-                {VERDICTS[key][scores[key] - 1]}
+                {RATING_VERDICTS[key][scores[key] - 1]}
                 <span className="text-[#f4ede2] ml-2 tabular-nums">{scores[key]}</span>
               </span>
             </div>

@@ -3,6 +3,8 @@ import RatingForm from "@/components/RatingForm";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { verdictFor } from "@/lib/verdicts";
+import { heatColor } from "@/lib/heat";
 
 export const dynamic = "force-dynamic";
 
@@ -29,13 +31,9 @@ export default async function SpotPage({
 
   if (!spot) notFound();
 
-  const avg = (key: "overall" | "sauce" | "crispy" | "value") =>
-    spot.ratings.length > 0
-      ? (
-          spot.ratings.reduce((sum, r) => sum + r[key], 0) /
-          spot.ratings.length
-        ).toFixed(1)
-      : "—";
+  const n = spot.ratings.length;
+  const avgOf = (key: "overall" | "sauce" | "crispy" | "value") =>
+    n > 0 ? spot.ratings.reduce((sum, r) => sum + r[key], 0) / n : null;
 
   return (
     <div>
@@ -64,19 +62,33 @@ export default async function SpotPage({
         })()}
       </p>
 
-      {/* Score summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        {[
-          { label: "Overall", val: avg("overall") },
-          { label: "Heat", val: avg("sauce") },
-          { label: "Crispiness", val: avg("crispy") },
-          { label: "Value", val: avg("value") },
-        ].map(({ label, val }) => (
-          <div key={label} className="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center">
-            <p className="text-3xl font-bold text-orange-500">{val}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
-          </div>
-        ))}
+      {/* Score summary — the spot's standing, in the same words you rate with */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+        {([
+          { key: "overall", label: "Overall" },
+          { key: "sauce", label: "Heat" },
+          { key: "crispy", label: "Crispiness" },
+          { key: "value", label: "Value" },
+        ] as const).map(({ key, label }) => {
+          const value = avgOf(key);
+          const rated = value !== null;
+          return (
+            <div key={key} className="bg-[#1a1614] border border-[#2c2521] rounded-xl p-4 text-center">
+              <p className="font-display text-[11px] uppercase tracking-[0.18em] text-[#9a8d82]">{label}</p>
+              <p
+                className="font-display text-4xl leading-none mt-1.5 tabular-nums"
+                style={{ color: !rated ? "#5c534c" : key === "sauce" ? heatColor(value) : "#f97316" }}
+              >
+                {rated ? value.toFixed(1) : "—"}
+              </p>
+              <p className="text-xs mt-1.5">
+                {rated
+                  ? <span className="text-[#f4ede2]">{verdictFor(key, value)}</span>
+                  : <span className="text-[#5c534c]">Not rated</span>}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
       {/* Rating form — the one place you act, so it gets the warm "station" treatment */}
