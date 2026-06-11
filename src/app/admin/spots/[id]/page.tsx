@@ -86,6 +86,7 @@ export default async function AdminEditSpotPage({
             <div>
               <span className="text-gray-300 text-sm font-medium">{r.user.name}</span>
               <span className="text-gray-500 text-xs ml-2">{r.user.email}</span>
+              <span className="text-gray-600 text-xs ml-2">{r.createdAt.toLocaleString()}</span>
               <div className="text-xs text-gray-500 mt-0.5">
                 Overall: {r.overall} · Heat: {r.sauce} · Crispy: {r.crispy} · Value: {r.value}
                 {r.notes && <span className="ml-2 italic">"{r.notes}"</span>}
