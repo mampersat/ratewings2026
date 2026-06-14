@@ -16,6 +16,13 @@ const FILTERS: { key: Filter; label: string }[] = [
   { key: "nonotes", label: "No notes" },
 ];
 
+// Deterministic hue per user id, so the same user is always the same color.
+function userHue(id: string) {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return h % 360;
+}
+
 const SORTS: { key: Sort; label: string }[] = [
   { key: "new", label: "Newest" },
   { key: "old", label: "Oldest" },
@@ -48,6 +55,10 @@ export default async function AdminRatingsPage({
     const isFlat = spread === 0;
     return { ...r, spread, isFlat, isSevens: isFlat && r.overall === 7 };
   });
+
+  // How many ratings each user has, to highlight "common" (repeat) users.
+  const userCounts = new Map<string, number>();
+  for (const r of withMeta) userCounts.set(r.userId, (userCounts.get(r.userId) ?? 0) + 1);
 
   const counts: Record<Filter, number> = {
     all: withMeta.length,
@@ -145,7 +156,11 @@ export default async function AdminRatingsPage({
             </tr>
           </thead>
           <tbody>
-            {list.map((r) => (
+            {list.map((r) => {
+              const count = userCounts.get(r.userId) ?? 1;
+              const common = count > 1;
+              const hue = userHue(r.userId);
+              return (
               <tr
                 key={r.id}
                 className={`border-b border-gray-800 hover:bg-gray-800/50 ${
@@ -157,15 +172,28 @@ export default async function AdminRatingsPage({
                     {r.spot.name}
                   </Link>
                 </td>
-                <td className="py-2 pr-4 text-gray-400">
-                  <div>{r.user.name}</div>
-                  <div className="text-gray-600 text-xs">{r.user.email}</div>
-                </td>
-                <td className="py-2 pr-4 text-gray-500 whitespace-nowrap">
-                  {r.createdAt.toLocaleDateString()}
-                  <span className="text-gray-600 text-xs ml-1">
-                    {r.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+                <td className="py-2 pr-4">
+                  <span
+                    className="inline-flex items-center gap-1.5"
+                    title={`${r.user.email} · ${count} rating${count === 1 ? "" : "s"}`}
+                  >
+                    {common && (
+                      <span
+                        className="w-2 h-2 rounded-full inline-block shrink-0"
+                        style={{ backgroundColor: `hsl(${hue} 70% 60%)` }}
+                      />
+                    )}
+                    <span style={common ? { color: `hsl(${hue} 70% 72%)` } : undefined} className={common ? "" : "text-gray-400"}>
+                      {r.user.name}
+                    </span>
+                    {common && <span className="text-gray-600 text-xs">×{count}</span>}
                   </span>
+                </td>
+                <td className="py-2 pr-4 text-gray-500 text-xs whitespace-nowrap leading-tight">
+                  <div>{r.createdAt.toLocaleDateString()}</div>
+                  <div className="text-gray-600">
+                    {r.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+                  </div>
                 </td>
                 <td className="py-2 pr-4 text-center whitespace-nowrap">
                   <span
@@ -192,7 +220,8 @@ export default async function AdminRatingsPage({
                   <DeleteRatingButton id={r.id} label={`${r.user.name} · ${r.spot.name}`} query={currentQuery} />
                 </td>
               </tr>
-            ))}
+              );
+            })}
             {list.length === 0 && (
               <tr>
                 <td colSpan={6} className="py-6 text-center text-gray-500">No ratings match this filter.</td>
