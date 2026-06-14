@@ -32,9 +32,14 @@ export default async function AdminSpotsPage({
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-200">Admin — Spots</h1>
-        <Link href="/admin/spots/merge" className="text-sm bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
-          Merge Spots
-        </Link>
+        <div className="flex gap-2">
+          <Link href="/admin/ratings" className="text-sm text-gray-400 hover:text-gray-200 border border-gray-700 px-4 py-2 rounded-lg">
+            Ratings →
+          </Link>
+          <Link href="/admin/spots/merge" className="text-sm bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">
+            Merge Spots
+          </Link>
+        </div>
       </div>
 
       <div className="flex gap-2 mb-6">

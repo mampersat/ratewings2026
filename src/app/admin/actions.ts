@@ -65,6 +65,12 @@ export async function deleteRatingAction(id: string, spotId: string) {
   redirect(`/admin/spots/${spotId}`);
 }
 
+export async function deleteRatingFromListAction(query: string, id: string) {
+  await requireAdmin();
+  await prisma.rating.delete({ where: { id } });
+  redirect(`/admin/ratings${query}`);
+}
+
 export async function mergeSpotsAction(primaryId: string, secondaryId: string) {
   await requireAdmin();
 
