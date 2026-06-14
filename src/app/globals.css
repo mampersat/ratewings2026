@@ -38,3 +38,22 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .fade-rise { animation: none; }
 }
+
+/* Dark-theme the Leaflet popup chrome so the wing-scorecard content reads on the char
+   surface. !important because leaflet's own stylesheet (white bg / #333 text) is imported
+   from the map component and can load after this file at equal specificity. */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #1a1614 !important;
+  color: #f4ede2 !important;
+  border: 1px solid #2c2521;
+}
+.leaflet-popup-content {
+  margin: 12px 14px;
+}
+.leaflet-popup-content a {
+  color: inherit;
+}
+.leaflet-popup-close-button {
+  color: #9a8d82 !important;
+}

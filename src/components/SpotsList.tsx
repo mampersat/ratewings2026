@@ -1,9 +1,18 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import SpotCard from "@/components/SpotCard";
 import { useUserLocation } from "@/hooks/useUserLocation";
 import type { SpotWithAvgRating } from "@/types";
+
+// Leaflet touches `window` at import time, so load the map client-only.
+const SpotsMap = dynamic(() => import("@/components/SpotsMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[70vh] rounded-xl border border-[#2c2521] animate-pulse" />
+  ),
+});
 
 const MI_TO_KM = 1.60934;
 const CITY_STORAGE_KEY = "rw_city_override";
@@ -102,6 +111,7 @@ export default function SpotsList({ spots }: Props) {
   const [maxMiles, setMaxMiles] = useState<number | null>(null);
   const [minRatings, setMinRatings] = useState(0);
   const [sortBy, setSortBy] = useState<SortKey>("distance");
+  const [view, setView] = useState<"grid" | "map">("grid");
 
   const getDistance = (spot: SpotWithAvgRating): number | null => {
     if (!hasLocation || !spot.lat || !spot.lng) return null;
@@ -229,13 +239,38 @@ export default function SpotsList({ spots }: Props) {
           </select>
         </div>
 
-        <p className="text-xs text-gray-500 dark:text-[#9a8d82] ml-auto self-end pb-1.5">
-          {sorted.length} spot{sorted.length !== 1 ? "s" : ""}
-        </p>
+        <div className="ml-auto flex items-end gap-3">
+          <div className="inline-flex self-end rounded-lg border border-[#3a322d] overflow-hidden">
+            {(["grid", "map"] as const).map((v) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setView(v)}
+                aria-pressed={view === v}
+                className={`px-3 py-1.5 text-sm capitalize transition-colors ${
+                  view === v
+                    ? "bg-[#120f0d] text-orange-500"
+                    : "bg-[#1a1614] text-[#9a8d82] hover:text-[#f4ede2]"
+                }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-gray-500 dark:text-[#9a8d82] self-end pb-1.5">
+            {sorted.length} spot{sorted.length !== 1 ? "s" : ""}
+          </p>
+        </div>
       </div>
 
       {sorted.length === 0 ? (
         <p className="text-gray-500 dark:text-[#9a8d82] text-center py-12">No spots match your filters.</p>
+      ) : view === "map" ? (
+        <SpotsMap
+          spots={sorted}
+          center={hasLocation ? { lat: location.lat, lng: location.lng } : null}
+          getDistance={getDistance}
+        />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((spot) => (
