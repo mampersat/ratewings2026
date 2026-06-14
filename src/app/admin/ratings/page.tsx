@@ -161,7 +161,12 @@ export default async function AdminRatingsPage({
                   <div>{r.user.name}</div>
                   <div className="text-gray-600 text-xs">{r.user.email}</div>
                 </td>
-                <td className="py-2 pr-4 text-gray-500 whitespace-nowrap">{r.createdAt.toLocaleDateString()}</td>
+                <td className="py-2 pr-4 text-gray-500 whitespace-nowrap">
+                  {r.createdAt.toLocaleDateString()}
+                  <span className="text-gray-600 text-xs ml-1">
+                    {r.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+                  </span>
+                </td>
                 <td className="py-2 pr-4 text-center whitespace-nowrap">
                   <span
                     title={`Overall ${r.overall} · Heat ${r.sauce} · Crispy ${r.crispy} · Value ${r.value}`}
