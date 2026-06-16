@@ -48,7 +48,16 @@ export async function POST(req: Request) {
   });
 
   const rating = await prisma.rating.create({
-    data: { spotId, userId, overall, sauce, crispy, value, notes: notes ?? null },
+    data: {
+      spotId,
+      userId,
+      overall,
+      sauce,
+      crispy,
+      value,
+      notes: notes ?? null,
+      clientIp: remoteIp ?? null,
+    },
   });
 
   return NextResponse.json(rating, { status: 201 });

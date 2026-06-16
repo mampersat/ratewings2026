@@ -150,6 +150,7 @@ export default async function AdminRatingsPage({
               <th className="pb-2 pr-4">Spot</th>
               <th className="pb-2 pr-4">User</th>
               <th className="pb-2 pr-4">Date</th>
+              <th className="pb-2 pr-4">IP</th>
               <th className="pb-2 pr-4 text-center" title="Overall · Heat · Crispy · Value">Scores</th>
               <th className="pb-2 pr-4">Notes</th>
               <th className="pb-2">Actions</th>
@@ -195,6 +196,9 @@ export default async function AdminRatingsPage({
                     {r.createdAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
                   </div>
                 </td>
+                <td className="py-2 pr-4 text-gray-500 text-xs font-mono whitespace-nowrap">
+                  {r.clientIp ?? <span className="text-gray-700">—</span>}
+                </td>
                 <td className="py-2 pr-4 text-center whitespace-nowrap">
                   <span
                     title={`Overall ${r.overall} · Heat ${r.sauce} · Crispy ${r.crispy} · Value ${r.value}`}
@@ -224,7 +228,7 @@ export default async function AdminRatingsPage({
             })}
             {list.length === 0 && (
               <tr>
-                <td colSpan={6} className="py-6 text-center text-gray-500">No ratings match this filter.</td>
+                <td colSpan={7} className="py-6 text-center text-gray-500">No ratings match this filter.</td>
               </tr>
             )}
           </tbody>

@@ -50,6 +50,8 @@ export default async function AdminEditRatingPage({
         <span className="text-gray-300">{rating.spot.name}</span>
         <span className="mx-2 text-gray-600">·</span>
         <span className="text-gray-500">{rating.createdAt.toLocaleString()}</span>
+        <span className="mx-2 text-gray-600">·</span>
+        <span className="text-gray-500 font-mono">{rating.clientIp ?? "no IP"}</span>
       </p>
 
       <form action={updateAction} className="bg-gray-800 border border-gray-700 rounded-xl p-6 space-y-4">

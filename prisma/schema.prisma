@@ -47,6 +47,7 @@ model Rating {
   crispy    Int      // 1–10
   value     Int      // 1–10
   notes     String?
+  clientIp  String?
   createdAt DateTime @default(now())
 
   spot Spot @relation(fields: [spotId], references: [id], onDelete: Cascade)
