@@ -17,7 +17,7 @@ export async function loginAction(
   if (password === (process.env.ADMIN_PASSWORD ?? "admin")) {
     const cookieStore = await cookies();
     cookieStore.set("rw_admin", "1", { httpOnly: true, path: "/", sameSite: "lax" });
-    redirect("/admin/spots");
+    redirect("/admin/ratings");
   }
   return "Invalid password";
 }
