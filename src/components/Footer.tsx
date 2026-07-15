@@ -17,7 +17,7 @@ export default async function Footer() {
   }
 
   return (
-    <footer className="border-t border-gray-700 mt-8 py-4 text-center text-xs text-gray-500">
+    <footer className="relative z-[2] border-t border-gray-700 mt-8 py-4 text-center text-xs text-gray-500">
       <Link href="/profile" className="hover:text-gray-300 transition-colors">
         {displayName}
       </Link>
