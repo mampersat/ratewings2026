@@ -9,24 +9,56 @@ export const dynamic = "force-dynamic";
 const DEFAULT_LAT = 42.9023;
 const DEFAULT_LNG = -78.868;
 
+type SortKey = "name" | "address" | "city" | "state" | "ratings" | "createdAt";
+type SortDir = "asc" | "desc";
+
+const SORT_COLUMNS: { key: SortKey; label: string; defaultDir: SortDir }[] = [
+  { key: "name", label: "Name", defaultDir: "asc" },
+  { key: "address", label: "Address", defaultDir: "asc" },
+  { key: "city", label: "City", defaultDir: "asc" },
+  { key: "state", label: "State", defaultDir: "asc" },
+  { key: "ratings", label: "Ratings", defaultDir: "desc" },
+  { key: "createdAt", label: "Created", defaultDir: "desc" },
+];
+
 export default async function AdminSpotsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ filter?: string }>;
+  searchParams: Promise<{ filter?: string; sort?: string; dir?: string }>;
 }) {
   const cookieStore = await cookies();
   if (!cookieStore.get("rw_admin")?.value) redirect("/admin");
 
-  const { filter } = await searchParams;
+  const { filter, sort, dir } = await searchParams;
   const defaultCoordsOnly = filter === "default_coords";
+
+  const activeColumn = SORT_COLUMNS.find((c) => c.key === sort) ?? SORT_COLUMNS[0];
+  const sortKey = activeColumn.key;
+  const sortDir: SortDir = dir === "asc" || dir === "desc" ? dir : activeColumn.defaultDir;
+
+  const orderBy =
+    sortKey === "ratings"
+      ? { ratings: { _count: sortDir } }
+      : { [sortKey]: sortDir };
 
   const spots = await prisma.spot.findMany({
     where: defaultCoordsOnly
       ? { lat: DEFAULT_LAT, lng: DEFAULT_LNG }
       : undefined,
-    orderBy: { name: "asc" },
+    orderBy,
     include: { _count: { select: { ratings: true } } },
   });
+
+  const sortHref = (key: SortKey) => {
+    const params = new URLSearchParams();
+    if (defaultCoordsOnly) params.set("filter", "default_coords");
+    params.set("sort", key);
+    const col = SORT_COLUMNS.find((c) => c.key === key)!;
+    const nextDir: SortDir =
+      key === sortKey ? (sortDir === "asc" ? "desc" : "asc") : col.defaultDir;
+    params.set("dir", nextDir);
+    return `/admin/spots?${params.toString()}`;
+  };
 
   return (
     <div>
@@ -55,6 +87,12 @@ export default async function AdminSpotsPage({
         >
           Default coords ({defaultCoordsOnly ? spots.length : "?"})
         </Link>
+        <Link
+          href={`/admin/spots?${defaultCoordsOnly ? "filter=default_coords&" : ""}sort=createdAt&dir=desc`}
+          className={`text-sm px-3 py-1.5 rounded-lg border ${sortKey === "createdAt" && sortDir === "desc" ? "bg-orange-500 border-orange-500 text-white" : "border-gray-700 text-gray-400 hover:text-gray-200"}`}
+        >
+          Newest first
+        </Link>
       </div>
 
       {defaultCoordsOnly && (
@@ -67,11 +105,16 @@ export default async function AdminSpotsPage({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-700 text-gray-400 text-left">
-              <th className="pb-2 pr-4">Name</th>
-              <th className="pb-2 pr-4">Address</th>
-              <th className="pb-2 pr-4">City</th>
-              <th className="pb-2 pr-4">State</th>
-              <th className="pb-2 pr-4 text-center">Ratings</th>
+              {SORT_COLUMNS.map((col) => (
+                <th key={col.key} className={`pb-2 pr-4 ${col.key === "ratings" ? "text-center" : ""}`}>
+                  <Link href={sortHref(col.key)} className="inline-flex items-center gap-1 hover:text-gray-200">
+                    {col.label}
+                    {sortKey === col.key && (
+                      <span className="text-orange-400">{sortDir === "asc" ? "↑" : "↓"}</span>
+                    )}
+                  </Link>
+                </th>
+              ))}
               <th className="pb-2 pr-4 text-center">Coords</th>
               <th className="pb-2">Actions</th>
             </tr>
@@ -86,6 +129,9 @@ export default async function AdminSpotsPage({
                   <td className="py-2 pr-4 text-gray-400">{spot.city}</td>
                   <td className="py-2 pr-4 text-gray-400">{spot.state}</td>
                   <td className="py-2 pr-4 text-center text-gray-400">{spot._count.ratings}</td>
+                  <td className="py-2 pr-4 text-gray-400 whitespace-nowrap">
+                    {spot.createdAt.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                  </td>
                   <td className="py-2 pr-4 text-center">
                     {isDefault
                       ? <span className="text-yellow-500 text-xs">default</span>
